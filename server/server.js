@@ -3,9 +3,15 @@ import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
 import rateLimit from 'express-rate-limit';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import { config } from './config/config.js';
 import { logIPAccess } from './middleware/ipRestriction.js';
 import { testConnection } from './config/database.js';
+
+// ES module compatibility for __dirname
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Import routes
 import patientAuthRoutes from './routes/patient.auth.js';
@@ -139,6 +145,36 @@ app.use('/api/queue-mgmt', queueManagementRoutes);
 
 // Departments routes (public endpoints for patient booking)
 app.use('/api/departments', departmentsRoutes);
+
+// ===== Static File Serving (Production) =====
+if (config.nodeEnv === 'production') {
+  // Serve patient dashboard at /patient
+  const patientDashboardPath = path.join(__dirname, '..', 'patients dashboard', 'dist');
+  app.use('/patient', express.static(patientDashboardPath));
+  app.get('/patient/*', (req, res) => {
+    res.sendFile(path.join(patientDashboardPath, 'index.html'));
+  });
+
+  // Serve admin dashboard at /admin
+  const adminDashboardPath = path.join(__dirname, '..', 'admin dashboard', 'dist');
+  app.use('/admin', express.static(adminDashboardPath));
+  app.get('/admin/*', (req, res) => {
+    res.sendFile(path.join(adminDashboardPath, 'index.html'));
+  });
+
+  // Serve doctor dashboard at /doctor
+  const doctorDashboardPath = path.join(__dirname, '..', 'doctor dashboard', 'dist');
+  app.use('/doctor', express.static(doctorDashboardPath));
+  app.get('/doctor/*', (req, res) => {
+    res.sendFile(path.join(doctorDashboardPath, 'index.html'));
+  });
+
+  // Serve patient dashboard as default (root)
+  app.use('/', express.static(patientDashboardPath));
+  app.get('/', (req, res) => {
+    res.sendFile(path.join(patientDashboardPath, 'index.html'));
+  });
+}
 
 // ===== 404 Handler =====
 app.use('*', (req, res) => {

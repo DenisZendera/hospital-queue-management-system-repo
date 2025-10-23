@@ -1,0 +1,34 @@
+{
+  "name": "good-health-hospital-system",
+  "version": "1.0.0",
+  "description": "Full-stack hospital management system with patient, doctor, and admin dashboards",
+  "scripts": {
+    "install:server": "cd server && npm install",
+    "install:admin": "cd \"admin dashboard\" && npm install",
+    "install:doctor": "cd \"doctor dashboard\" && npm install",
+    "install:patient": "cd \"patients dashboard\" && npm install",
+    "install:all": "npm run install:server && npm run install:admin && npm run install:doctor && npm run install:patient",
+    "build:admin": "cd \"admin dashboard\" && npm run build",
+    "build:doctor": "cd \"doctor dashboard\" && npm run build",
+    "build:patient": "cd \"patients dashboard\" && npm run build",
+    "build:frontends": "npm run build:admin && npm run build:doctor && npm run build:patient",
+    "build:all": "npm run install:all && npm run build:frontends",
+    "start": "cd server && npm start",
+    "dev:server": "cd server && npm run dev",
+    "dev:admin": "cd \"admin dashboard\" && npm run dev",
+    "dev:doctor": "cd \"doctor dashboard\" && npm run dev",
+    "dev:patient": "cd \"patients dashboard\" && npm run dev"
+  },
+  "keywords": [
+    "hospital",
+    "management",
+    "healthcare",
+    "booking",
+    "queue"
+  ],
+  "author": "Denis Zendera",
+  "license": "Apache-2.0",
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

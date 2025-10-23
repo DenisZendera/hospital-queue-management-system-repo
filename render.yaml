@@ -1,0 +1,16 @@
+services:
+  # Backend API and Static File Server
+  - type: web
+    name: good-health-hospital
+    env: node
+    buildCommand: npm run build:all
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: JWT_SECRET_PATIENT
+        generateValue: true
+      - key: JWT_SECRET_STAFF
+        generateValue: true

@@ -8,11 +8,14 @@ build/
 **/dist/
 **/build/
 
-# Environment files
+# Environment files (but allow .env.production for deployment)
 .env
 .env.local
+.env.development
 .env.*.local
-**/.env
+server/.env
+!.env.production
+!**/.env.production
 
 # Lock files (optional - you may want to include these)
 # package-lock.json
