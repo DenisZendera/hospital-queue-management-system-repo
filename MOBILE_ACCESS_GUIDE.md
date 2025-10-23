@@ -23,7 +23,7 @@ npm run dev
 
 **Terminal 2 - Patient Dashboard:**
 ```bash
-cd "C:\Users\DENIS\Documents\good health\server\patients dashboard"
+cd "C:\Users\DENIS\Documents\good health\patients dashboard"
 npm run dev
 ```
 
